@@ -1,0 +1,562 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* mon css*/
+/* =========================
+   RESET / BASE
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f7f7f7;
+  color: #222;
+}
+
+/* =========================
+   CONTAINERS / LAYOUT
+========================= */
+
+.container {
+  max-width: 1300px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.page {
+  padding: 20px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 30px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 22px;
+}
+
+.inner-card {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.card h2,
+.card h3 {
+  margin-top: 0;
+}
+
+/* =========================
+   SIDEBAR ADMIN
+========================= */
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 30px;
+}
+
+.admin-sidebar button {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px;
+  font-size: 15px;
+}
+
+/* =========================
+   FORMULAIRES
+========================= */
+
+.field {
+  margin-bottom: 16px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* =========================
+   BOUTONS
+========================= */
+
+button,
+.btn {
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  background: #f2f2f2;
+}
+
+.btn.primary {
+  background: #0d6efd;
+  color: white;
+  border: none;
+}
+
+.btn.danger {
+  background: #dc3545;
+  color: white;
+  border: none;
+}
+
+.btn.success {
+  background: #28a745;
+  color: white;
+  border: none;
+}
+
+.btn.full {
+  width: 100%;
+}
+
+button:disabled,
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================
+   TABLES
+========================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+}
+
+th,
+td {
+  padding: 12px 10px;
+  text-align: left;
+}
+
+.table-head {
+  background: #f4f4f4;
+}
+
+.table-row {
+  border-top: 1px solid #eee;
+}
+
+/* =========================
+   TEXTE / FEEDBACK
+========================= */
+
+.error {
+  color: #dc3545;
+  margin-top: 8px;
+}
+
+.success-text {
+  color: #28a745;
+  margin-top: 8px;
+}
+
+.muted {
+  font-size: 12px;
+  color: #666;
+}
+
+/* =========================
+   BADGES (ROLES)
+========================= */
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.badge.admin {
+  background: #343a40;
+  color: white;
+}
+
+.badge.gestionnaire {
+  background: #6f42c1;
+  color: white;
+}
+
+.badge.commercial {
+  background: #17a2b8;
+  color: white;
+}
+
+/* =========================
+   MESSAGES
+========================= */
+
+.help-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.message-row {
+  border-top: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.message-row.is-read {
+  opacity: 0.7;
+}
+
+.message-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.message-main {
+  flex: 1;
+}
+
+.message-title {
+  margin-bottom: 4px;
+}
+
+.new {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.message-meta {
+  font-size: 13px;
+  color: #555;
+}
+
+.message-content {
+  margin-top: 6px;
+}
+
+.message-date {
+  font-size: 12px;
+  color: #777;
+  margin-top: 6px;
+}
+
+/* =========================
+   UTILS
+========================= */
+
+.no-margin {
+  margin: 0;
+}
+
+.mt-8 {
+  margin-top: 8px;
+}
+
+.mt-12 {
+  margin-top: 12px;
+}
+
+.mt-16 {
+  margin-top: 16px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.scroll-box {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.checkbox-box {
+  margin-top: 6px;
+  max-height: 160px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.checkbox-row {
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* =========================
+   LOGIN PAGE (GRAND FORMAT)
+========================= */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f7f7;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 520px;          /* ⬅️ PLUS LARGE */
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 36px;             /* ⬅️ PLUS D’AIR */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.login-card h2 {
+  text-align: center;
+  margin-bottom: 26px;
+  font-size: 26px;           /* ⬅️ TITRE PLUS GRAND */
+}
+
+/* Champs */
+.login-card input {
+  font-size: 16px;
+  padding: 12px;             /* ⬅️ INPUTS PLUS GRANDS */
+}
+
+/* Bouton */
+.login-card button {
+  margin-top: 18px;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+/* Erreur */
+.login-card .error {
+  margin-top: 10px;
+  font-size: 14px;
+}
+/* =========================================================
+   AJUSTEMENTS PROPORTIONNELS (À COLLER TOUT EN BAS)
+   -> garde ton CSS, améliore seulement les proportions
+========================================================= */
+
+/* Container un peu plus "pro" et centré */
+.container {
+  max-width: 1180px;      /* moins large = plus lisible */
+  margin: 40px auto;      /* plus d’air */
+}
+
+/* Layout admin : sidebar + contenu, et contenu centré */
+.admin-layout {
+  grid-template-columns: 240px minmax(0, 900px); /* contenu pas infiniment large */
+  justify-content: center;                       /* centre le bloc global */
+  align-items: start;
+}
+
+/* Sidebar un peu plus compacte */
+.admin-sidebar {
+  position: sticky;  /* reste visible quand on scroll */
+  top: 20px;
+}
+
+/* Quand tu es dans l’onglet "squads", le grid interne doit être équilibré */
+.grid-2 {
+  grid-template-columns: 420px 1fr; /* gauche plus large, droite flexible */
+  align-items: start;
+}
+
+/* Pour éviter que les cartes soient trop hautes/vide */
+.card {
+  padding: 20px;
+}
+
+.inner-card {
+  padding: 16px;
+}
+
+/* La liste squads : meilleure utilisation de l'espace */
+.scroll-box {
+  max-height: 420px; /* un peu moins haut */
+}
+
+/* Tables : plus lisibles, colonnes mieux réparties */
+table {
+  table-layout: fixed; /* évite l’explosion en largeur */
+}
+
+th, td {
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Admin Users : rendre la table + form plus proportionnels si tu utilises grid-2 */
+.grid-2 > .card:first-child {
+  max-width: 440px; /* création pas trop petite */
+}
+
+.grid-2 > .card:last-child {
+  min-width: 0;
+}
+
+/* Responsive : sur petit écran => 1 colonne */
+@media (max-width: 1100px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    position: static;
+  }
+}
+/* =========================================================
+   FIX TABLE ADMIN USERS (lisibilité & proportions)
+========================================================= */
+
+/* Table plus stable */
+table {
+  table-layout: auto;        /* ⬅️ IMPORTANT */
+  width: 100%;
+}
+
+/* Empêcher la coupure lettre par lettre */
+th,
+td {
+  white-space: nowrap;       /* ⬅️ garde les mots entiers */
+  word-break: normal;
+  vertical-align: middle;
+}
+
+/* Autoriser le retour à la ligne UNIQUEMENT pour email */
+td.email {
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Largeurs minimales par colonne */
+th.id,
+td.id {
+  width: 60px;
+}
+
+th.nom,
+td.nom {
+  min-width: 160px;
+}
+
+th.email,
+td.email {
+  min-width: 220px;
+}
+
+th.role,
+td.role {
+  min-width: 140px;
+}
+
+th.actif,
+td.actif {
+  width: 80px;
+  text-align: center;
+}
+
+th.action,
+td.action {
+  width: 120px;
+  text-align: center;
+}
+
+/* Boutons action toujours horizontaux */
+td.action button {
+  white-space: nowrap;
+  padding: 8px 14px;
+}
+
+/* Scroll horizontal propre si écran petit */
+.card table {
+  display: block;
+  overflow-x: auto;
+}
+
