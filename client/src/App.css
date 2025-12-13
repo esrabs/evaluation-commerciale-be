@@ -560,3 +560,31 @@ td.action button {
   overflow-x: auto;
 }
 
+/* =========================
+   ADMIN USERS LAYOUT FIX
+========================= */
+
+/* Conteneur de la page AdminUsers */
+.admin-users-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Cartes créer + liste prennent toute la largeur */
+.admin-users-layout .card {
+  width: 100%;
+}
+
+.admin-users-layout {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 220px;
+  gap: 12px;
+  align-items: end;
+}
+

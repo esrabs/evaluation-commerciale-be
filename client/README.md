@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <h1>Évaluation Commerciale — Projet BE</h1>
 
 <p>

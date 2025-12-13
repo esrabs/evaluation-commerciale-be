@@ -65,44 +65,26 @@ export default function AdminUsers() {
   };
 
   return (
-    <div className="grid-2">
+    <div className="admin-users-layout">
       {/* Create */}
       <div className="card">
         <h3>Créer un utilisateur</h3>
 
         <form onSubmit={createUser}>
-          <div className="flex">
+          {/* ✅ Nom + Prénom + Rôle sur une ligne */}
+          <div className="form-row">
             <input
               placeholder="Nom"
               value={nom}
               onChange={(e) => setNom(e.target.value)}
-              className="grow"
             />
+
             <input
               placeholder="Prénom"
               value={prenom}
               onChange={(e) => setPrenom(e.target.value)}
-              className="grow"
             />
-          </div>
 
-          <input
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-8"
-          />
-
-          <input
-            placeholder="Mot de passe"
-            type="password"
-            value={motDePasse}
-            onChange={(e) => setMotDePasse(e.target.value)}
-            className="mt-8"
-          />
-
-          <div className="mt-8">
-            <label>Rôle : </label>{" "}
             <select value={role} onChange={(e) => setRole(e.target.value)}>
               <option value="COMMERCIAL">COMMERCIAL</option>
               <option value="GESTIONNAIRE">GESTIONNAIRE</option>
@@ -110,15 +92,30 @@ export default function AdminUsers() {
             </select>
           </div>
 
-          <button className="btn full mt-10">Créer</button>
+          <input
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-12"
+          />
+
+          <input
+            placeholder="Mot de passe"
+            type="password"
+            value={motDePasse}
+            onChange={(e) => setMotDePasse(e.target.value)}
+            className="mt-12"
+          />
+
+          <button className="btn full mt-16">Créer</button>
         </form>
 
         {err && <p className="error">{err}</p>}
         {msg && <p className="success-text">{msg}</p>}
       </div>
 
-      {/* List */}
-      <div className="card">
+      {/* ✅ List (sous le formulaire) */}
+      <div className="card mt-20">
         <div className="flex-between">
           <h3 className="no-margin">Liste users</h3>
           <button className="btn" onClick={loadUsers} disabled={loading}>
@@ -130,43 +127,37 @@ export default function AdminUsers() {
           <thead>
             <tr>
               <th className="id">ID</th>
-                <th className="nom">Nom</th>
-                <th className="email">Email</th>
-                <th className="role">Rôle</th>
-                <th className="actif">Actif</th>
-                <th className="action">Action</th>
-             </tr>
+              <th className="nom">Nom</th>
+              <th className="email">Email</th>
+              <th className="role">Rôle</th>
+              <th className="actif">Actif</th>
+              <th className="action">Action</th>
+            </tr>
           </thead>
 
-            <tbody>
-                {users.map((u) => (
-                    <tr key={u.id}>
-                    <td className="id">{u.id}</td>
+          <tbody>
+            {users.map((u) => (
+              <tr key={u.id}>
+                <td className="id">{u.id}</td>
 
-                    <td className="nom">
-                        {u.prenom} {u.nom}
-                    </td>
+                <td className="nom">
+                  {u.prenom} {u.nom}
+                </td>
 
-                    <td className="email">
-                        {u.email}
-                    </td>
+                <td className="email">{u.email}</td>
 
-                    <td className="role">
-                        {u.role}
-                    </td>
+                <td className="role">{u.role}</td>
 
-                    <td className="actif">
-                        {String(u.actif)}
-                    </td>
+                <td className="actif">{String(u.actif)}</td>
 
-                    <td className="action">
-                        <button onClick={() => toggleActif(u.id, !u.actif)}>
-                        {u.actif ? "Désactiver" : "Activer"}
-                        </button>
-                    </td>
-                    </tr>
-                ))}
-            </tbody>         
+                <td className="action">
+                  <button className="btn" onClick={() => toggleActif(u.id, !u.actif)}>
+                    {u.actif ? "Désactiver" : "Activer"}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
 
         {err && <p className="error">{err}</p>}
