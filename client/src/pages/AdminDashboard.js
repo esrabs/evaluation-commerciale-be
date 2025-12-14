@@ -7,13 +7,17 @@ export default function AdminDashboard() {
   return (
     <div className="container">
       <div className="flex-between">
-        <h2>Dashboard ADMIN</h2>
-        <button onClick={logout} className="danger">
+        <h2 className="no-margin">Dashboard ADMIN</h2>
+
+        <button onClick={logout} className="btn danger">
           Déconnexion
         </button>
       </div>
 
-      <AdminPage />
+      {/* ✅ Layout global admin : menu + contenu */}
+      <div className="admin-shell mt-16">
+        <AdminPage />
+      </div>
     </div>
   );
 }

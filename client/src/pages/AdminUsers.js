@@ -122,7 +122,7 @@ export default function AdminUsers() {
             {loading ? "..." : "Rafraîchir"}
           </button>
         </div>
-
+        <div className="table-wrap">
         <table>
           <thead>
             <tr>
@@ -159,10 +159,11 @@ export default function AdminUsers() {
             ))}
           </tbody>
         </table>
-
+        </div>
         {err && <p className="error">{err}</p>}
         {msg && <p className="success-text">{msg}</p>}
       </div>
     </div>
   );
 }
+

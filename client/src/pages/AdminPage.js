@@ -8,40 +8,51 @@ export default function AdminPage() {
 
   return (
     <div className="admin-layout">
-      <aside className="admin-sidebar card">
-        <h3 className="no-top-margin">ADMIN</h3>
+            <aside className="admin-sidebar card">
+        <h3 className="no-margin">ADMIN</h3>
 
-        <button className="btn full" onClick={() => setTab("users")} disabled={tab === "users"}>
+        <button
+          className={`btn full ${tab === "users" ? "is-active" : ""}`}
+          onClick={() => setTab("users")}
+          type="button"
+        >
           Users
         </button>
 
-        <button className="btn full" onClick={() => setTab("squads")} disabled={tab === "squads"}>
+        <button
+          className={`btn full ${tab === "squads" ? "is-active" : ""}`}
+          onClick={() => setTab("squads")}
+          type="button"
+        >
           Squads
         </button>
 
         <button
-          className="btn full"
+          className={`btn full ${tab === "classement" ? "is-active" : ""}`}
           onClick={() => setTab("classement")}
-          disabled={tab === "classement"}
+          type="button"
         >
           Classement
         </button>
 
         <button
-          className="btn full"
+          className={`btn full ${tab === "messages" ? "is-active" : ""}`}
           onClick={() => setTab("messages")}
-          disabled={tab === "messages"}
+          type="button"
         >
           Messages
         </button>
       </aside>
 
-      <main>
+
+      <main className="admin-main">
         {tab === "users" && <AdminUsers />}
         {tab === "squads" && <SquadsAdmin />}
         {tab === "classement" && <ClassementAdmin />}
         {tab === "messages" && <MessagesPage />}
       </main>
+      
+
     </div>
   );
 }
@@ -343,8 +354,9 @@ function ClassementAdmin() {
       <div className="flex-between">
         <h2 className="no-top-margin">Classement global</h2>
 
-        <div className="flex">
-          <label className="muted">Top</label>
+      <div className="classement-tools">
+        <div className="tool">
+          <label>Top</label>
           <input
             type="number"
             min="1"
@@ -353,10 +365,12 @@ function ClassementAdmin() {
             onChange={(e) => setLimit(e.target.value)}
             className="input-small"
           />
-          <button className="btn" onClick={load} disabled={loading}>
-            {loading ? "..." : "Charger"}
-          </button>
         </div>
+
+        <button className="btn btn-compact" onClick={load} disabled={loading}>
+          {loading ? "..." : "Charger"}
+        </button>
+      </div>
       </div>
 
       {err && <p className="error">{err}</p>}

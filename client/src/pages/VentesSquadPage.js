@@ -45,6 +45,7 @@ export default function VentesSquadPage() {
       ) : ventes.length === 0 ? (
         <p>Aucune vente.</p>
       ) : (
+        <div className="table-wrap">  
         <table>
           <thead>
             <tr className="table-head">
@@ -67,6 +68,7 @@ export default function VentesSquadPage() {
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

@@ -47,6 +47,7 @@ export default function StatsSquadPage() {
           {!data.classement || data.classement.length === 0 ? (
             <p>Aucun commercial / aucune vente.</p>
           ) : (
+           <div className="table-wrap"> 
             <table>
               <thead>
                 <tr className="table-head">
@@ -71,6 +72,7 @@ export default function StatsSquadPage() {
                 ))}
               </tbody>
             </table>
+            </div>
           )}
         </>
       )}

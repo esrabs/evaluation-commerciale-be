@@ -1,31 +1,33 @@
 import { useAuth } from "../auth/AuthContext";
+import MessagesPage from "./MessagesPage";
 import VentesSquadPage from "./VentesSquadPage";
 import StatsSquadPage from "./StatsSquadPage";
-import MessagesPage from "./MessagesPage";
 
-export default function ManagerDashboard() {
+export default function GestionnaireDashboard() {
   const { logout } = useAuth();
 
   return (
     <div className="container">
-      <div className="flex-between">
-        <h2>Dashboard GESTIONNAIRE</h2>
-        <button className="danger" onClick={logout}>
-          Déconnexion
-        </button>
+      <div className="page-header">
+        <h2 className="page-title">Dashboard GESTIONNAIRE</h2>
+        <button className="btn danger" onClick={logout}>Déconnexion</button>
       </div>
 
-      <div className="mt-20">
+      {/* 🔹 GRILLE IDENTIQUE AU COMMERCIAL */}
+      <div className="dashboard-grid">
+        {/* COLONNE GAUCHE */}
         <VentesSquadPage />
-      </div>
 
-      <div className="mt-20">
+        {/* COLONNE DROITE */}
         <StatsSquadPage />
-      </div>
 
-      <div className="mt-20">
-        <MessagesPage />
+        {/* 🔹 MESSAGERIE EN PLEINE LARGEUR */}
+        <div className="dashboard-full">
+          <h3 className="section-title">Messagerie</h3>
+          <MessagesPage />
+        </div>
       </div>
     </div>
   );
 }
+

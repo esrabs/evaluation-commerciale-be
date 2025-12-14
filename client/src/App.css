@@ -1,590 +1,507 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* mon css*/
 /* =========================
-   RESET / BASE
+   BASE / RESET
 ========================= */
+* { box-sizing: border-box; }
 
-* {
-  box-sizing: border-box;
+:root{
+  --bg: #f7f7f7;
+  --card: #ffffff;
+  --border: #dedede;
+  --text: #111827;
+  --muted: #6b7280;
+
+  --primary: #0d6efd;
+  --danger: #dc3545;
+
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 10px 28px rgba(0,0,0,.08);
 }
 
-body {
-  margin: 0;
+body{
+  margin:0;
   font-family: Arial, Helvetica, sans-serif;
-  background: #f7f7f7;
-  color: #222;
+  background: var(--bg);
+  color: var(--text);
 }
 
 /* =========================
-   CONTAINERS / LAYOUT
+   CONTAINER / CENTRAGE GLOBAL
 ========================= */
-
-.container {
-  max-width: 1300px;
-  margin: 30px auto;
+.container{
+  max-width: 1200px;
+  margin: 32px auto;
   padding: 0 20px;
 }
 
-.page {
-  padding: 20px;
+/* ✅ FIX: évite le bug "container dans container" (Commercial/Gestionnaire) */
+.container .container{
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 30px;
+/* Optionnel: wrapper si tu veux centrer via une “page” */
+.page-center{ display:flex; justify-content:center; width:100%; }
+.page-content{ width:100%; max-width:1200px; margin: 32px auto; padding: 0 20px; }
+
+h2{ margin:0; font-size: 28px; font-weight: 800; }
+h3{ margin:0; font-size: 18px; font-weight: 800; }
+
+.muted{ color: var(--muted); font-size: 12px; }
+.no-margin{ margin:0; }
+
+.mt-8{ margin-top:8px; }
+.mt-12{ margin-top:12px; }
+.mt-16{ margin-top:16px; }
+.mt-20{ margin-top:20px; }
+.mt-28{ margin-top:28px; }
+
+/* =========================
+   FLEX / GRID
+========================= */
+.flex{ display:flex; align-items:center; gap:10px; }
+.flex-between{ display:flex; align-items:center; justify-content:space-between; gap:14px; }
+
+.grid-2{ display:grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items:start; }
+.grid-3{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+/* Pour commercial/gestionnaire: mieux utiliser l’espace (plus “harmonieux”) */
+.grid-2.wide-left{ grid-template-columns: 1.15fr 0.85fr; }
+
+/* =========================
+   HEADER PAGE (titre + logout)
+========================= */
+.page-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 16px;
+  margin-bottom: 22px;
 }
 
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.flex {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.page-title{
+  margin:0;
+  font-size: 28px;
+  font-weight: 900;
 }
 
 /* =========================
    CARDS
 ========================= */
-
-.card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
+.card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 22px;
 }
 
-.inner-card {
-  border: 1px solid #eee;
+.inner-card{
+  background: #fff;
+  border: 1px solid #ececec;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+}
+
+/* =========================
+   FORMS / INPUTS
+========================= */
+.field{ margin-bottom: 14px; }
+
+label{
+  display:block;
+  font-size: 13px;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+input, select, textarea{
+  width:100%;
+  padding: 11px 12px;
+  font-size: 14px;
   border-radius: 10px;
-  padding: 14px;
+  border: 1px solid #cfcfcf;
+  background: #fff;
+  outline:none;
 }
 
-.card h2,
-.card h3 {
-  margin-top: 0;
+input:focus, select:focus, textarea:focus{
+  border-color: #9dbdff;
+  box-shadow: 0 0 0 3px rgba(13,110,253,.12);
 }
 
-/* =========================
-   SIDEBAR ADMIN
-========================= */
+textarea{ resize: vertical; min-height: 110px; }
 
-.admin-layout {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 30px;
-}
-
-.admin-sidebar button {
-  width: 100%;
-  margin-bottom: 12px;
-  padding: 10px;
-  font-size: 15px;
+/* AdminUsers : Nom + Prénom + Rôle sur une ligne */
+.form-row{
+  display:grid;
+  grid-template-columns: 1fr 1fr 220px;
+  gap: 12px;
 }
 
 /* =========================
-   FORMULAIRES
+   BUTTONS
 ========================= */
-
-.field {
-  margin-bottom: 16px;
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 6px;
-  font-size: 15px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-textarea {
-  resize: vertical;
-}
-
-/* =========================
-   BOUTONS
-========================= */
-
-button,
-.btn {
+button, .btn{
+  border-radius: 10px;
+  border: 1px solid #bdbdbd;
+  background: #f2f2f2;
   padding: 10px 14px;
   font-size: 14px;
-  cursor: pointer;
-  border-radius: 6px;
-  border: 1px solid #aaa;
-  background: #f2f2f2;
+  cursor:pointer;
 }
 
-.btn.primary {
-  background: #0d6efd;
-  color: white;
-  border: none;
+.btn.full{ width:100%; }
+
+.btn.primary{
+  background: var(--primary);
+  border-color: var(--primary);
+  color:#fff;
 }
 
-.btn.danger {
-  background: #dc3545;
-  color: white;
-  border: none;
+.btn.danger{
+  background: var(--danger);
+  border-color: var(--danger);
+  color:#fff;
 }
 
-.btn.success {
-  background: #28a745;
-  color: white;
-  border: none;
-}
-
-.btn.full {
-  width: 100%;
-}
-
-button:disabled,
-.btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+button:disabled, .btn:disabled{
+  opacity: .55;
+  cursor:not-allowed;
 }
 
 /* =========================
    TABLES
 ========================= */
+.table-wrap{ width:100%; overflow-x:auto; }
 
-table {
-  width: 100%;
+table{
+  width:100%;
   border-collapse: collapse;
   margin-top: 14px;
+  min-width: 720px;
 }
 
-th,
-td {
+thead tr{ background: #f3f3f3; }
+
+th, td{
   padding: 12px 10px;
-  text-align: left;
+  text-align:left;
+  border-top: 1px solid #eeeeee;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
-.table-head {
+td.email{ white-space: normal; word-break: break-word; }
+
+/* =========================
+   ADMIN LAYOUT (comme tes captures)
+========================= */
+.admin-layout{
+  display:grid;
+  grid-template-columns: 260px 1fr;
+  gap: 26px;
+  align-items:start;
+}
+
+.admin-sidebar{
+  border-radius: var(--radius);
+  padding: 18px;
+}
+
+.admin-sidebar h3{ margin-bottom: 12px; }
+
+.admin-sidebar .btn,
+.admin-sidebar button{
+  width:100%;
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  font-size: 14px;
+  border-radius: 12px;
   background: #f4f4f4;
 }
 
-.table-row {
-  border-top: 1px solid #eee;
+/* ✅ Les boutons désactivés restent visibles (pas “blanc sur blanc”) */
+.admin-sidebar button:disabled{
+  opacity: 1;
+  cursor: default;
+  background: #111827;
+  border-color: #111827;
+  color: #fff;
 }
 
 /* =========================
-   TEXTE / FEEDBACK
+   CLASSEMENT (Top + Charger plus pro)
 ========================= */
-
-.error {
-  color: #dc3545;
-  margin-top: 8px;
+.classement-tools{
+  display:flex;
+  align-items:flex-end;
+  gap: 10px;
 }
 
-.success-text {
-  color: #28a745;
-  margin-top: 8px;
+.classement-tools .tool{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
 }
 
-.muted {
+.classement-tools .tool label{
+  margin:0;
   font-size: 12px;
-  color: #666;
+  color: var(--muted);
+}
+
+/* input top “compact pro” */
+.input-small{
+  width: 120px !important;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+/* bouton charger “compact pro” */
+.btn-compact{
+  padding: 10px 16px;
+  border-radius: 10px;
 }
 
 /* =========================
-   BADGES (ROLES)
+   SQUADS (checkbox à droite)
 ========================= */
-
-.badge {
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: bold;
+.checkbox-box{
+  margin-top: 8px;
+  max-height: 170px;
+  overflow:auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fff;
 }
 
-.badge.admin {
-  background: #343a40;
-  color: white;
+/* ✅ Case à cocher à droite + texte à gauche */
+.checkbox-row{
+  display:flex;
+  flex-direction: row-reverse;
+  align-items:center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 8px;
+  border-radius: 10px;
 }
 
-.badge.gestionnaire {
-  background: #6f42c1;
-  color: white;
+.checkbox-row:hover{ background:#fafafa; }
+
+.checkbox-row input[type="checkbox"]{
+  width: 18px;
+  height: 18px;
+  margin: 0;
 }
 
-.badge.commercial {
-  background: #17a2b8;
-  color: white;
+.checkbox-text{
+  flex:1;
+  text-align:left;
+  line-height:1.2;
 }
 
 /* =========================
    MESSAGES
 ========================= */
-
-.help-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 6px;
-}
-
-.ml-auto {
-  margin-left: auto;
-}
-
-.message-row {
+.message-row{
   border-top: 1px solid #eee;
-  padding: 10px 0;
+  padding: 12px 0;
 }
 
-.message-row.is-read {
-  opacity: 0.7;
+.message-row.is-read{ opacity: .75; }
+
+.message-top{
+  display:flex;
+  justify-content:space-between;
+  gap: 12px;
 }
 
-.message-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
+.message-title{ margin-bottom: 6px; font-weight: 800; }
+.new{ color:#16a34a; font-weight: 800; }
 
-.message-main {
-  flex: 1;
-}
+.message-meta{ font-size: 13px; color:#444; }
+.message-date{ font-size: 12px; color:#777; margin-top: 6px; }
 
-.message-title {
-  margin-bottom: 4px;
-}
-
-.new {
-  color: #28a745;
-  font-weight: bold;
-}
-
-.message-meta {
-  font-size: 13px;
-  color: #555;
-}
-
-.message-content {
-  margin-top: 6px;
-}
-
-.message-date {
-  font-size: 12px;
-  color: #777;
-  margin-top: 6px;
-}
+.success-text{ color:#16a34a; margin-top: 10px; }
+.error{ color: var(--danger); margin-top: 10px; }
 
 /* =========================
-   UTILS
+   LOGIN
 ========================= */
-
-.no-margin {
-  margin: 0;
-}
-
-.mt-8 {
-  margin-top: 8px;
-}
-
-.mt-12 {
-  margin-top: 12px;
-}
-
-.mt-16 {
-  margin-top: 16px;
-}
-
-.mt-20 {
-  margin-top: 20px;
-}
-
-.scroll-box {
-  max-height: 500px;
-  overflow: auto;
-}
-
-.checkbox-box {
-  margin-top: 6px;
-  max-height: 160px;
-  overflow: auto;
-  border: 1px solid #ddd;
-  padding: 8px;
-  border-radius: 8px;
-  background: #fff;
-}
-
-.checkbox-row {
-  display: block;
-  margin-bottom: 6px;
-}
-
-/* =========================
-   LOGIN PAGE (GRAND FORMAT)
-========================= */
-
-.login-page {
+.login-page{
   min-height: 100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: var(--bg);
+}
+
+.login-card{
+  width:100%;
+  max-width: 520px;
+  background:#fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px;
+  box-shadow: var(--shadow);
+}
+
+.login-card h2{
+  text-align:center;
+  margin-bottom: 24px;
+}
+
+/* =========================
+   DASHBOARDS (Commercial / Gestionnaire) - harmonieux
+========================= */
+.dashboard-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items:start;
+}
+
+.dashboard-full{ grid-column: 1 / -1; }
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 1100px){
+  .admin-layout{ grid-template-columns: 1fr; }
+  .grid-2{ grid-template-columns: 1fr; }
+  .grid-2.wide-left{ grid-template-columns: 1fr; }
+  .form-row{ grid-template-columns: 1fr; }
+  .dashboard-grid{ grid-template-columns: 1fr; }
+  table{ min-width: 650px; }
+}
+@media (max-width: 600px){
+  .page-header{ flex-direction: column; align-items: flex-start; gap: 12px; }
+}
+/* =========================
+   FIX MANAGER GRID OVERFLOW
+   (tables / contenu trop large dans 2 colonnes)
+========================= */
+
+/* autorise les colonnes à rétrécir (sinon overflow -> layout cassé) */
+.grid-2 > * { min-width: 0; }
+.card { min-width: 0; }
+
+/* dans les dashboards, ne force pas la table à min-width:720px */
+.grid-2 table { min-width: 0 !important; }
+
+/* autorise le retour à la ligne dans les cellules (email etc.) */
+.grid-2 th, .grid-2 td { white-space: normal; }
+
+/* si une table est vraiment large, elle scroll proprement */
+.grid-2 .table-wrap { overflow-x: auto; }
+
+/* =========================
+   MOBILE SIDEBAR BUTTONS: TAILLE FIXE
+========================= */
+
+/* Zone sidebar */
+.admin-sidebar button {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f7f7f7;
-}
 
-.login-card {
-  width: 100%;
-  max-width: 520px;          /* ⬅️ PLUS LARGE */
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 16px;
-  padding: 36px;             /* ⬅️ PLUS D’AIR */
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-}
-
-.login-card h2 {
-  text-align: center;
-  margin-bottom: 26px;
-  font-size: 26px;           /* ⬅️ TITRE PLUS GRAND */
-}
-
-/* Champs */
-.login-card input {
-  font-size: 16px;
-  padding: 12px;             /* ⬅️ INPUTS PLUS GRANDS */
-}
-
-/* Bouton */
-.login-card button {
-  margin-top: 18px;
-  padding: 14px;
-  font-size: 16px;
-  border-radius: 8px;
-}
-
-/* Erreur */
-.login-card .error {
-  margin-top: 10px;
+  /* ✅ Taille identique */
+  height: 46px;            /* hauteur fixe */
+  padding: 0 14px;         /* padding horizontal seulement */
   font-size: 14px;
-}
-/* =========================================================
-   AJUSTEMENTS PROPORTIONNELS (À COLLER TOUT EN BAS)
-   -> garde ton CSS, améliore seulement les proportions
-========================================================= */
+  font-weight: 600;
 
-/* Container un peu plus "pro" et centré */
-.container {
-  max-width: 1180px;      /* moins large = plus lisible */
-  margin: 40px auto;      /* plus d’air */
+  border-radius: 12px;
+  box-sizing: border-box;
 }
 
-/* Layout admin : sidebar + contenu, et contenu centré */
-.admin-layout {
-  grid-template-columns: 240px minmax(0, 900px); /* contenu pas infiniment large */
-  justify-content: center;                       /* centre le bloc global */
-  align-items: start;
+/* ✅ Même taille même si disabled / active */
+.admin-sidebar button:disabled,
+.admin-sidebar button.is-active {
+  height: 46px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 12px;
 }
 
-/* Sidebar un peu plus compacte */
-.admin-sidebar {
-  position: sticky;  /* reste visible quand on scroll */
-  top: 20px;
+/* Style actif (si tu utilises une classe) */
+.admin-sidebar button.is-active {
+  background: #111827;
+  color: #fff;
+  border-color: #111827;
 }
 
-/* Quand tu es dans l’onglet "squads", le grid interne doit être équilibré */
-.grid-2 {
-  grid-template-columns: 420px 1fr; /* gauche plus large, droite flexible */
-  align-items: start;
+/* Disabled : garde la taille + lisible */
+.admin-sidebar button:disabled {
+  opacity: 1;              /* pas de “réduction” visuelle */
+  cursor: default;
+  background: #f4f4f4;
+  color: #111;
+  border-color: #cfcfcf;
 }
 
-/* Pour éviter que les cartes soient trop hautes/vide */
-.card {
-  padding: 20px;
-}
-
-.inner-card {
-  padding: 16px;
-}
-
-/* La liste squads : meilleure utilisation de l'espace */
-.scroll-box {
-  max-height: 420px; /* un peu moins haut */
-}
-
-/* Tables : plus lisibles, colonnes mieux réparties */
-table {
-  table-layout: fixed; /* évite l’explosion en largeur */
-}
-
-th, td {
-  word-wrap: break-word;
-  overflow-wrap: anywhere;
-}
-
-/* Admin Users : rendre la table + form plus proportionnels si tu utilises grid-2 */
-.grid-2 > .card:first-child {
-  max-width: 440px; /* création pas trop petite */
-}
-
-.grid-2 > .card:last-child {
-  min-width: 0;
-}
-
-/* Responsive : sur petit écran => 1 colonne */
-@media (max-width: 1100px) {
-  .admin-layout {
-    grid-template-columns: 1fr;
-    justify-content: stretch;
-  }
-
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
-
-  .admin-sidebar {
-    position: static;
+/* Optionnel: sur mobile, espace propre */
+@media (max-width: 700px) {
+  .admin-sidebar button {
+    height: 48px;          /* un peu plus confortable */
+    font-size: 15px;
   }
 }
 /* =========================================================
-   FIX TABLE ADMIN USERS (lisibilité & proportions)
+   MOBILE ADMIN MENU — STABLE (active class, no disabled)
+   À coller TOUT EN BAS
 ========================================================= */
+@media (max-width: 700px){
 
-/* Table plus stable */
-table {
-  table-layout: auto;        /* ⬅️ IMPORTANT */
-  width: 100%;
+  .admin-layout{
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .admin-sidebar{
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .admin-sidebar button,
+  .admin-sidebar .btn{
+    width: 100%;
+    height: 52px;                 /* ✅ stable */
+    padding: 0 14px;              /* ✅ stable */
+    margin-bottom: 12px;
+
+    display: flex;                /* ✅ centrage iOS stable */
+    align-items: center;
+    justify-content: center;
+
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;               /* ✅ évite variations */
+    border-radius: 14px;
+
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+  }
+
+  /* Active tab (pro + stable) */
+  .admin-sidebar .is-active{
+    background: #111827 !important;
+    border-color: #111827 !important;
+    color: #fff !important;
+  }
+
+  /* Empêche Safari de “grossir” le texte */
+  .admin-sidebar,
+  .admin-sidebar *{
+    -webkit-text-size-adjust: 100%;
+  }
 }
-
-/* Empêcher la coupure lettre par lettre */
-th,
-td {
-  white-space: nowrap;       /* ⬅️ garde les mots entiers */
-  word-break: normal;
-  vertical-align: middle;
-}
-
-/* Autoriser le retour à la ligne UNIQUEMENT pour email */
-td.email {
-  white-space: normal;
-  word-break: break-word;
-}
-
-/* Largeurs minimales par colonne */
-th.id,
-td.id {
-  width: 60px;
-}
-
-th.nom,
-td.nom {
-  min-width: 160px;
-}
-
-th.email,
-td.email {
-  min-width: 220px;
-}
-
-th.role,
-td.role {
-  min-width: 140px;
-}
-
-th.actif,
-td.actif {
-  width: 80px;
-  text-align: center;
-}
-
-th.action,
-td.action {
-  width: 120px;
-  text-align: center;
-}
-
-/* Boutons action toujours horizontaux */
-td.action button {
-  white-space: nowrap;
-  padding: 8px 14px;
-}
-
-/* Scroll horizontal propre si écran petit */
-.card table {
-  display: block;
-  overflow-x: auto;
-}
-
-/* =========================
-   ADMIN USERS LAYOUT FIX
-========================= */
-
-/* Conteneur de la page AdminUsers */
-.admin-users-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-/* Cartes créer + liste prennent toute la largeur */
-.admin-users-layout .card {
-  width: 100%;
-}
-
-.admin-users-layout {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 220px;
-  gap: 12px;
-  align-items: end;
-}
-

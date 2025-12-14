@@ -30,7 +30,7 @@ db.sequelize
   .sync()
   .then(() => {
     console.log("✅ Base de données connectée");
-    app.listen(3004, () => {
+    app.listen(3004, "0.0.0.0", () => {
       console.log("🚀 Serveur BE lancé sur http://localhost:3004");
     });
   })
