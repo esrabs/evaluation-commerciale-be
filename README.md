@@ -216,7 +216,7 @@ Ce fichier n’est pas versionné dans GitHub pour des raisons de sécurité.
 </p>
 <hr />
 
-<h2>▶ Lancer le projet</h2>
+<h2> Lancer le projet</h2>
 
 <h3>Backend</h3>
 
