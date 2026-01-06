@@ -1,3 +1,6 @@
+const validate = require("../validators/validate");
+const { createVenteValidator, dateFilterValidator } = require("../validators/ventesValidators");
+
 const router = require("express").Router();
 const { Op } = require("sequelize");
 const { Vente, Users, Squad } = require("../models");
@@ -12,18 +15,16 @@ router.use(auth);
  * COMMERCIAL: créer une vente pour lui-même
  * Body: { dateVente: "YYYY-MM-DD", montant: 123.45 }
  */
-router.post("/", role("COMMERCIAL"), async (req, res) => {
+router.post(
+  "/",
+  role("COMMERCIAL"),
+  createVenteValidator,
+  validate,
+  async (req, res) => {
   try {
     const { dateVente, montant } = req.body;
 
-    if (!dateVente || montant === undefined) {
-      return res.status(400).json({ error: "dateVente et montant requis" });
-    }
-
-    if (montant <= 0) {
-      return res.status(400).json({ error: "Le montant doit être positif" });
-    }
-
+   
     const vente = await Vente.create({
       dateVente,
       montant,
@@ -42,7 +43,12 @@ router.post("/", role("COMMERCIAL"), async (req, res) => {
  * COMMERCIAL: voir ses ventes
  * Query optionnelle: ?from=YYYY-MM-DD&to=YYYY-MM-DD
  */
-router.get("/me", role("COMMERCIAL"), async (req, res) => {
+rrouter.get(
+  "/me",
+  role("COMMERCIAL"),
+  dateFilterValidator,
+  validate,
+  async (req, res) => {
   try {
     const { from, to } = req.query;
 
@@ -73,7 +79,12 @@ router.get("/me", role("COMMERCIAL"), async (req, res) => {
  * GESTIONNAIRE: voir les ventes des commerciaux de sa squad
  * Query optionnelle: ?from=YYYY-MM-DD&to=YYYY-MM-DD
  */
-router.get("/squad", role("GESTIONNAIRE"), async (req, res) => {
+router.get(
+  "/squad",
+  role("GESTIONNAIRE"),
+  dateFilterValidator,
+  validate,
+  async (req, res) =>  {
   try {
     const { from, to } = req.query;
 
@@ -147,6 +158,7 @@ router.get("/", role("ADMIN"), async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erreur serveur" });
+
   }
 });
 
