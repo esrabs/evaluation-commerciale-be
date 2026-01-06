@@ -43,7 +43,7 @@ router.post(
  * COMMERCIAL: voir ses ventes
  * Query optionnelle: ?from=YYYY-MM-DD&to=YYYY-MM-DD
  */
-rrouter.get(
+router.get(
   "/me",
   role("COMMERCIAL"),
   dateFilterValidator,
