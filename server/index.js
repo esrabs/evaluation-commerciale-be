@@ -56,9 +56,9 @@ app.get("/", (req, res) => {
 const db = require("./models");
 
 db.sequelize
-  .sync()
+  .authenticate()
   .then(() => {
-    console.log("Base de données connectée");
+    console.log(" Base de données connectée");
     const PORT = process.env.PORT || 3004;
     app.listen(PORT, "0.0.0.0", () => {
       console.log(` Serveur BE lancé sur http://localhost:${PORT}`);
@@ -67,7 +67,3 @@ db.sequelize
   .catch((err) => {
     console.error(" Erreur DB :", err);
   });
-
-  const errorHandler = require("./middleware/errorHandler");
-
-app.use(errorHandler);
