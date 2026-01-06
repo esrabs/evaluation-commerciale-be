@@ -1,6 +1,11 @@
 const router = require("express").Router();
 const { Message, Users } = require("../models");
+
 const auth = require("../middleware/auth");
+const role = require("../middleware/role");   // ✅ AJOUTE ÇA si absent
+
+const validate = require("../validators/validate");
+const { sendMessageValidator, messageIdParamValidator } = require("../validators/messagesValidators");
 
 router.use(auth);
 
@@ -9,7 +14,12 @@ router.use(auth);
  * Envoyer un message
  * Body: { idDestinataire, titre, contenu }
  */
-router.post("/", async (req, res) => {
+router.post(
+  "/",
+  role("COMMERCIAL", "GESTIONNAIRE", "ADMIN"),
+  sendMessageValidator,
+  validate,
+  async (req, res) =>  {
   try {
     const { idDestinataire, titre, contenu } = req.body;
 
@@ -82,7 +92,12 @@ router.get("/envoyes", async (req, res) => {
  * PUT /messages/:id/lu
  * Marquer comme lu (seulement le destinataire)
  */
-router.put("/:id/lu", async (req, res) => {
+router.put(
+  "/:id/lu",
+  role("COMMERCIAL", "GESTIONNAIRE", "ADMIN"),
+  messageIdParamValidator,
+  validate,
+  async (req, res) => {
   try {
     const msg = await Message.findByPk(req.params.id);
     if (!msg) return res.status(404).json({ error: "Message introuvable" });

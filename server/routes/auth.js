@@ -1,10 +1,12 @@
+const validate = require("../validators/validate");
+const { loginValidator } = require("../validators/authValidators");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { Users } = require("../models"); // modèle Sequelize
 
 // POST /auth/login
-router.post("/login", async (req, res) => {
+router.post("/login", loginValidator, validate, async (req, res) => {
   try {
     const { email, motDePasse } = req.body;
 
