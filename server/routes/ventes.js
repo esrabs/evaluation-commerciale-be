@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { Op } = require("sequelize");
 const { Vente, Users, Squad } = require("../models");
 
 const auth = require("../middleware/auth");
@@ -19,10 +20,14 @@ router.post("/", role("COMMERCIAL"), async (req, res) => {
       return res.status(400).json({ error: "dateVente et montant requis" });
     }
 
+    if (montant <= 0) {
+      return res.status(400).json({ error: "Le montant doit être positif" });
+    }
+
     const vente = await Vente.create({
       dateVente,
       montant,
-      idCommercial: req.user.id, // 🔥 vient du token
+      idCommercial: req.user.id,
     });
 
     res.status(201).json(vente);
@@ -42,13 +47,17 @@ router.get("/me", role("COMMERCIAL"), async (req, res) => {
     const { from, to } = req.query;
 
     const where = { idCommercial: req.user.id };
+
     if (from && to) {
-      where.dateVente = { ["between"]: [from, to] }; // (on corrige juste après)
+      where.dateVente = { [Op.between]: [from, to] };
+    } else if (from) {
+      where.dateVente = { [Op.gte]: from };
+    } else if (to) {
+      where.dateVente = { [Op.lte]: to };
     }
 
-    // 👉 version safe sans opérateurs Sequelize (simple) :
     const ventes = await Vente.findAll({
-      where: { idCommercial: req.user.id },
+      where,
       order: [["dateVente", "DESC"]],
     });
 
@@ -66,7 +75,9 @@ router.get("/me", role("COMMERCIAL"), async (req, res) => {
  */
 router.get("/squad", role("GESTIONNAIRE"), async (req, res) => {
   try {
-    // trouver la squad dont ce user est le gestionnaire
+    const { from, to } = req.query;
+
+    // trouver la squad du gestionnaire
     const squad = await Squad.findOne({
       where: { idGestionnaire: req.user.id },
     });
@@ -75,22 +86,35 @@ router.get("/squad", role("GESTIONNAIRE"), async (req, res) => {
       return res.status(404).json({ error: "Aucune squad assignée à ce gestionnaire" });
     }
 
-    // trouver les commerciaux de cette squad
+    // trouver les commerciaux de la squad
     const commerciaux = await Users.findAll({
       where: { idSquad: squad.id, role: "COMMERCIAL", actif: true },
-      attributes: ["id", "nom", "prenom", "email", "idSquad"],
+      attributes: ["id"],
     });
 
     const ids = commerciaux.map((c) => c.id);
-
-    // s'il n'y a personne
     if (ids.length === 0) return res.json([]);
 
-    // récupérer les ventes
+    const whereVentes = {
+      idCommercial: { [Op.in]: ids },
+    };
+
+    if (from && to) {
+      whereVentes.dateVente = { [Op.between]: [from, to] };
+    } else if (from) {
+      whereVentes.dateVente = { [Op.gte]: from };
+    } else if (to) {
+      whereVentes.dateVente = { [Op.lte]: to };
+    }
+
     const ventes = await Vente.findAll({
-      where: { idCommercial: ids },
+      where: whereVentes,
       include: [
-        { model: Users, as: "commercial", attributes: ["id", "nom", "prenom", "email"] },
+        {
+          model: Users,
+          as: "commercial",
+          attributes: ["id", "nom", "prenom", "email"],
+        },
       ],
       order: [["dateVente", "DESC"]],
     });
@@ -110,10 +134,15 @@ router.get("/", role("ADMIN"), async (req, res) => {
   try {
     const ventes = await Vente.findAll({
       include: [
-        { model: Users, as: "commercial", attributes: ["id", "nom", "prenom", "email", "idSquad"] },
+        {
+          model: Users,
+          as: "commercial",
+          attributes: ["id", "nom", "prenom", "email", "idSquad"],
+        },
       ],
       order: [["dateVente", "DESC"]],
     });
+
     res.json(ventes);
   } catch (err) {
     console.error(err);
